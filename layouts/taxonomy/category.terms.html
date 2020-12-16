@@ -97,7 +97,7 @@
               {{ end }}
             {{ else }}
               {{ range .Data.Terms.ByCount }}
-              <div id="posts-list-{{ .Page.Slug }}" class="archive box" data-category="{{ .Page.LinkTitle }}" style="display: block;">
+              <div id="posts-list-{{ .Page.Slug }}" class="archive box" data-category="{{ .Page.LinkTitle | lower }}" style="display: block;">
                 <h4 class="archive-title text-xlarge">
                   <a class="link-unstyled" href="{{ .Page.Slug }}">{{ .Page.LinkTitle }} ({{ .Pages | len }})</a>
                 </h4>

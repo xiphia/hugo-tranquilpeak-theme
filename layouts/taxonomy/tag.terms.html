@@ -20,14 +20,14 @@
 
             <section>
               {{ range .Data.Terms.ByCount }}
-                <a class="tag tag--primary tag--small" href="#{{ .Page.Slug }}-list" data-tag="{{ .Page.LinkTitle }}">
+                <a class="tag tag--primary tag--small" href="#{{ .Page.Slug }}-list" data-tag="{{ .Page.LinkTitle | lower }}">
                   {{ .Page.LinkTitle }}
                 </a>
               {{ end }}
             </section>
             <section class="boxes">
               {{ range .Data.Terms.ByCount }}
-                <div id="{{ .Page.Slug }}-list" class="archive box" data-tag="{{ .Page.LinkTitle }}">
+                <div id="{{ .Page.Slug }}-list" class="archive box" data-tag="{{ .Page.LinkTitle | lower }}">
                   <h4 class="archive-title">
                     <a class="link-unstyled" href="{{ .Page.Slug }}">
                       {{ .Page.LinkTitle }} ({{ .Pages | len }})
