@@ -1,10 +1,21 @@
 {{ if not (eq .Params.showMeta false) }}
   <div class="postShorten-meta post-meta">
+    <i class="fa fa-pencil"></i>
     {{ if not (eq .Params.showDate false)  }}
       <time itemprop="datePublished" datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
         {{ partial "internal/date.html" . }}
       </time>
     {{ end }}
+  </div>
+  {{ if and (not (eq .Params.showDate false)) (ne .Params.lastMod .Params.publishDate) }}
+    <div class="postShorten-meta post-meta">
+          <i class="fa fa-refresh"></i>
+          <time itemprop="dateLastModified" datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+            {{ partial "internal/last-mod.html" . }}
+          </time>
+    </div>
+  {{ end }}
+  <div class="postShorten-meta post-meta">
     {{ partial "post/category.html" . }}
   </div>
 {{ end }}

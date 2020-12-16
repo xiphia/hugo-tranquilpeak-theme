@@ -1,9 +1,23 @@
 {{ if .Params.categories }}
   {{ $categoriesLen := len .Params.categories }}
   {{ if gt $categoriesLen 0 }}
-    <span>{{ i18n "post.categorized_in" }}</span>
+    <i class="fa fa-bookmark"></i>
     {{ range $index, $value := (.GetTerms "categories" ) }}
       <a class="category-link" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>{{ if lt $index (sub $categoriesLen 1) }}, {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ if .Params.tags }}
+  {{ $tagsLen := len .Params.tags }}
+  {{ if gt $tagsLen 0 }}
+    {{ if .Params.categories }}
+      {{ if gt (len .Params.categories) 0 }}
+        &middot;
+      {{ end }}
+    {{ end }}
+    <i class="fa fa-tags"></i>
+    {{ range $index, $value := (.GetTerms "tags" ) }}
+      <a class="category-link" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>{{ if lt $index (sub $tagsLen 1) }}, {{ end }}
     {{ end }}
   {{ end }}
 {{ end }}
