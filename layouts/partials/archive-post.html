@@ -10,6 +10,7 @@
           {{ range .Pages }}
             <li class="archive-post archive-day" data-date="{{ dateFormat "20060102" .Date }}">
               <a class="archive-post-title" href="{{ .Permalink }}">{{ .Title }}</a>
+              <span class="archive-post-date"> - {{ partial "internal/date" . }}</span>
             </li>
           {{ end }}
         </ul>

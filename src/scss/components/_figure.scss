@@ -13,10 +13,18 @@
     &.left {
         float:  left;
         margin: 2px;
+
+        .fig-img {
+            margin: 2px auto;
+        }
     }
     &.right {
         float:  right;
         margin: 2px;
+
+        .fig-img {
+            margin: 2px auto;
+        }
     }
     &.fig-20 {
         @extend .left;

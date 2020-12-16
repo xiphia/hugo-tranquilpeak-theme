@@ -3,6 +3,8 @@
   {{ $.Scratch.Add "c-language" (lower (.Get "lang")) }}
   {{ $.Scratch.Add "c-url" (.Get "url") }}
   {{ $.Scratch.Add "c-link-text" (.Get "link-text") }}
+  {{ $.Scratch.Add "c-line-number" (.Get "line-number") }}
+  {{ $.Scratch.Add "c-offset" (.Get "offset") }}
 {{ else }}
   {{ if ge (len .Params) 1 }}
     {{ $.Scratch.Add "c-title" (.Get 0) }}
@@ -16,22 +18,33 @@
   {{ if ge (len .Params) 4 }}
     {{ $.Scratch.Add "c-link-text" (.Get 3) }}
   {{ end }}
+  {{ if ge (len .Params) 5 }}
+    {{ $.Scratch.Add "c-line-number" (.Get 4) }}
+  {{ end }}
+  {{ if ge (len .Params) 6 }}
+    {{ $.Scratch.Add "c-offset" (.Get 5) }}
+  {{ end }}
 {{ end }}
 {{ $trimmedContent := trim .Inner "\n" }}
+{{ $offset := int ($.Scratch.Get "c-offset" | default "1") }}
 <figure class="highlight {{ $.Scratch.Get "c-language" }} language-{{ with ($.Scratch.Get "c-language") }}{{ . }}{{ end }}">
-  <figcaption>
-    {{ if and ($.Scratch.Get "c-url") ($.Scratch.Get "c-title") }}
-      <span>{{ $.Scratch.Get "c-title" }}</span><a href="{{ ($.Scratch.Get "c-url") | safeURL }}" target="_blank" rel="external">{{ $.Scratch.Get "c-link-text" | default ($.Scratch.Get "c-title") }}</a>
-    {{ else if $.Scratch.Get "c-title" }}
-      <span>{{ $.Scratch.Get "c-title" }}</span>
-    {{ end }}
-  </figcaption>
+  {{ if or ($.Scratch.Get "c-title") (and ($.Scratch.Get "c-url") ($.Scratch.Get "c-link-text")) }}
+    <figcaption>
+      {{ if and ($.Scratch.Get "c-url") ($.Scratch.Get "c-title") }}
+        <span>{{ $.Scratch.Get "c-title" }}</span><a href="{{ ($.Scratch.Get "c-url") | safeURL }}" target="_blank" rel="external">{{ $.Scratch.Get "c-link-text" | default ($.Scratch.Get "c-title") }}</a>
+      {{ else if $.Scratch.Get "c-title" }}
+        <span>{{ $.Scratch.Get "c-title" }}</span>
+      {{ end }}
+    </figcaption>
+  {{ end }}
   <table>
     <tbody>
       <tr>
-        <td class="gutter">
-          <pre>{{ range $index,$value := (split $trimmedContent "\n") }}<span class="line">{{ add $index 1 }}</span><br>{{ end }}</pre>
-        </td>
+        {{ if ne ($.Scratch.Get "c-line-number") "false" }}
+          <td class="gutter">
+            <pre>{{ range $index, $value := (split $trimmedContent "\n") }}<span class="line">{{ add $index $offset }}</span><br>{{ end }}</pre>
+          </td>
+        {{ end }}
         <td class="code">
           <pre class="code-highlight language-{{ $.Scratch.Get "c-language" }}"><code class="{{ $.Scratch.Get "c-language" }}">{{ $trimmedContent }}</code></pre>
         </td>
