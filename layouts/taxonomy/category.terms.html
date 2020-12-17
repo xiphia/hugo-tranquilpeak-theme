@@ -99,7 +99,7 @@
               {{ range .Data.Terms.ByCount }}
               <div id="posts-list-{{ .Page.Slug }}" class="archive box" data-category="{{ .Page.LinkTitle | lower }}" style="display: block;">
                 <h4 class="archive-title text-xlarge">
-                  <a class="link-unstyled" href="{{ .Page.Slug }}">{{ .Page.LinkTitle }} ({{ .Pages | len }})</a>
+                  <a class="link-unstyled" href="{{ .Page.Permalink }}">{{ .Page.LinkTitle }} ({{ .Pages | len }})</a>
                 </h4>
                 <ul class="archive-posts">
                   {{ range .Pages.ByDate }}
